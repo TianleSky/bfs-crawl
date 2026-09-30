@@ -1,0 +1,3 @@
+function pinningBypass(){
+  ['libttboringssl.so','libsscronet.so','libssl.so','libcrypto.so'].forEach(function(nm){ var m=Process.findModuleByName(nm); if(!m) return; ['SSL_get_verify_result','SSL_CTX_set_custom_verify','SSL_CTX_set_verify','SSL_set_verify'].forEach(function(fn){ try{ var p=m.findExportByName(fn); if(!p) return; if(fn==='SSL_get_verify_result'){ Interceptor.replace(p,new NativeCallback(function(){ return 0; },'int',['pointer'])); } else { Interceptor.replace(p,new NativeCallback(function(){ return 0; },'int',['pointer','pointer','pointer'])); } }catch(e){} }); }); send('[pin] ssl pinning bypass (get_verify_result->0)');
+}

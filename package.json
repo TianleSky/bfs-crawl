@@ -1,0 +1,16 @@
+{
+  "name": "bfs-clicker",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "通用自动点击 Web 控制台爬虫（Playwright + Burp 代理，DFS/BFS 遍历）",
+  "scripts": {
+    "login": "node src/index.js login",
+    "crawl": "node src/index.js crawl",
+    "resume": "node src/index.js resume",
+    "demo": "node src/index.js demo",
+    "dedup-traffic": "node scripts/dedup-traffic.mjs"
+  },
+  "dependencies": {
+    "playwright": "^1.62.1"
+  }
+}

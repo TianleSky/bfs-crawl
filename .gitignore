@@ -1,0 +1,21 @@
+node_modules/
+
+# 爬取产物（含真实会话/流量/截图，绝不上传）
+output/
+output-*/
+output-crawl.log
+output-demo.log
+
+# 调试/探针脚本
+probe-*.mjs
+
+# 日志
+*.log
+
+# 系统
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
