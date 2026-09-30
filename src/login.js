@@ -49,11 +49,16 @@ export async function login({ browser, config, log }) {
     }
   };
 
-  // 用户关窗（或浏览器进程退出）→ 保存并正常退出，绝不报错
-  browser.on('disconnected', () => {
+  // 信号源（双保险，saved 标志防重入）：
+  //   1. ctx 'close' —— 用户关窗（最后一页关闭）即触发。Edge 开了"启动加速"时
+  //      关窗后 msedge 进程仍驻留后台，进程退出事件不可靠，必须用 context close；
+  //   2. browser 'disconnected' —— 浏览器进程真的退出（无启动加速场景兜底）。
+  const finish = () => {
     save();
     process.exit(0);
-  });
+  };
+  ctx.on('close', finish);
+  browser.on('disconnected', finish);
 
   const deadline = Date.now() + 10 * 60 * 1000;
   while (Date.now() < deadline && !saved) {
